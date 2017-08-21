@@ -1,0 +1,74 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Easy flight</title>
+    <link rel="shortcut icon" type="image/x-icon" href = "{% static "static/images/icon.png" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "static/css/styles.css" %}">
+    <script type="text/javascript" src="{% static "static/js/bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "static/js/javascript.js" %}"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="mid">
+            <header>
+               <div class="topmenu">
+                   <aside>
+                       <a href="/">Главная</a>
+                       {% if not username %}
+                       <a href="{% url 'register' %}">Регистрация</a>
+                       {% endif %}
+                       <a href="/about/">О нас</a>
+                       <a href="/contacts/">Контакты</a>
+                       {% if username %}
+                       {% if not staff %}
+                          <a href="/lcb/">Личный кабинет ({{ username }})</a>
+                       {% else %}
+                          <a href="/lcb_admin/">Личный кабинет ({{ username }})</a>
+                        {% endif %}
+                       {% else %}
+                          <a href="{% url "users:auth_login" %}">Войти</a>
+                       {% endif %}
+                   </aside>
+               </div>
+                <img src="{% static "static/images/logo2.png" %}" alt="Лого сайта" tittle="Лого сайта">
+                <div class="afisha">
+                   <img src="{% static "static/images/icon.png" %}" alt="Лого сайта" tittle="Лого сайта">
+                   <h2> Путeшествуй по миру, затрачивая, при этом, минимум на перелеты с EasyFlight!</h2>
+                   <p><a href="/about/" target="_blank">Узнать больше!</a></p>
+                   <div class="clear"></div>
+                </div>
+            </header>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="mid">
+            <nav>
+                <ul>
+                    <li><a href = "/find/">Поиск билетов</a></li>
+                    <li><a href = "/links/">Полезные ссылки для туристов</a></li>
+                    <li><a href = "/alko/">Алкотуризм - с чем его пьют</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="content">
+        <div class="mid">
+            <div class="fon">
+
+                {% block content %}{% endblock %}
+                {% block login %}{% endblock %}
+
+                <div class="clear"></div>
+                <hr class="line>">
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="mid">
+            <span>2016 &copy; Easy Flight</span> | <span>Дизайн и разработка: Радченко Родион || Кравченко Александр || Нооль Яна</span>
+        </div>
+    </div>
+</body>
+</html>

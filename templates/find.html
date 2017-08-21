@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="find">
+<p>Поиск билета: </p>
+<p><form action="{% url "users:auth_login" %}" method="post"  class="form_auth">
+  </form>
+        <fieldset>
+          <form method='POST' id='find' action='/find/'>
+          <div id = 'tickets'>
+            {{form}}
+          </div>
+          </fieldset>
+            <br>
+          <button type="submit">
+              Найти
+          </button>
+        </form>
+        {% if tickets %}
+        <p>
+          Result: <br />
+          {%for ticket in tickets%}
+          {{ticket.tickets_from}} - {{ticket.tickets_to}} {{ticket.tickets_datetime}}
+          class:{{ticket.tickets_class}}  place:{{ticket.tickets_places}}{% if username %} price:{{ticket.tickets_price}}$ <a href="/find/user/add/{{ticket.id}}/">Заказать</a>
+          {% else %}
+          <a href="/auth/users/login/">Войдите, для заказа билета.</a>
+          {% endif %}
+          {%endfor%}
+        </p>
+        {% endif %}
+
+</p>
+</div>
+{% endblock %}

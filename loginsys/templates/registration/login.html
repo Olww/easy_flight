@@ -1,0 +1,212 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="registr">
+<section class="main">
+<h1>Авторизация на сайте:</h1>
+</section>
+<form action="{% url "users:auth_login" %}" method="post"
+class="form_auth">
+{% csrf_token %}
+<fieldset>
+<input type="hidden" name="next" value="/" />
+
+<label for="login">Логин:</label>
+<input type="text" id="name" value="" name="username" /> <span id="valid"></span>
+<br />
+<label for="password">Пароль:</label>
+<input type="password" id="password"
+value="" name="password" /> <span id="valid1"></span>
+<br>
+<button type="submit" class="button">
+Log in
+</button>
+</fieldset>
+{% if login_error %}
+<label class="error">{{ login_error }}</label>
+{% endif %}
+</form>
+<p><a href="/auth/registration/">Если Вы еще не зарегистрированы, нажмите сюда, что бы сделать это. </a></p>
+</div>
+
+<script type="text/javascript" src="http://yandex.st/jquery/1.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function()
+{
+  var pattern = /^[a-z0-9_-]{3,10}$/i;
+  var login = $('#name');
+  login.blur(function()
+  {
+    if(login.val() != '')
+    {
+      if(login.val().search(pattern) == 0)
+      {
+      $('#valid').text('✓');
+      $('#submit').attr('disabled', false);
+      login.removeClass('error').addClass('ok');
+      }
+
+      else
+      {
+      $('#valid').text('*Неверный формат');
+      $('#submit').attr('disabled', true);
+      login.addClass('error');
+      }
+    }
+
+    else
+    {
+    $('#valid').text('*Поле не должно быть пустым!');
+    login.addClass('error');
+    $('#submit').attr('disabled', true);
+    }
+  });
+});
+
+$(document).ready(function(){
+  var pattern = /^[a-z0-9_-]{8,18}$/;
+  var password = $('#password');
+  password.blur(function()
+  {
+    if(password.val() != '')
+    {
+      if(password.val().search(pattern) == 0)
+      {
+      $('#valid1').text('✓');
+      $('#submit').attr('disabled', false);
+      password.removeClass('error1').addClass('ok1');
+      }
+      else
+      {
+      $('#valid1').text('*Неверный формат');
+      $('#submit').attr('disabled', true);
+        password.addClass('error1');
+      }
+    }
+    else
+    {
+    $('#valid1').text('*Поле не должно быть пустым!');
+    password.addClass('error1');
+    $('#submit').attr('disabled', true);
+    }
+  });
+});
+</script>
+
+<style>
+form{
+margin:0 auto;
+max-width:40%;
+box-sizing:border-box;
+padding:40px;
+border-radius:5px;
+background: rgba(248, 245, 156, 0.96);
+
+-webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .45);
+
+box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .45);
+}
+/* Стили полей ввода */
+.form-control{
+height:50px;
+width:100%;
+border-radius:3px;
+border:rgba(0,0,0,.3) 2px solid;
+box-sizing:border-box;
+font-family: 'Open Sans', sans-serif;
+font-size:18px;
+padding:10px;
+margin-bottom:30px;
+}
+.message:focus,
+.textbox:focus{
+outline:none;
+border:rgba(24,149,215,1) 2px solid;
+color:rgba(24,149,215,1);
+}
+/* Стили текстового поля */
+.message{
+background: rgba(255, 255, 255, 0.4);
+width:100%;
+height: 120px;
+border:rgba(0,0,0,.3) 2px solid;
+box-sizing:border-box;
+-moz-border-radius: 3px;
+font-size:18px;
+font-family: 'Open Sans', sans-serif;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+display:block;
+padding:10px;
+margin-bottom:30px;
+overflow:hidden;
+}
+/* Базовые стили кнопки */
+.button{
+height:38px;
+width:40%;
+margin-top: 8px;
+margin-left: 30%;
+border-radius:8px;
+border:rgba(0,0,0,.3) 0px solid;
+box-sizing:border-box;
+padding:10px;
+background:#1683a3;
+color:#FFF;
+font-family: 'Open Sans', sans-serif;
+font-weight:400;
+font-size: 16pt;
+transition:background .4s;
+cursor:pointer;
+}
+/* Изменение фона кнопки при наведении */
+.button:hover{
+background:#80b438;
+}
+
+.ok{
+
+box-shadow: 0 0 5px #5cd053;
+border-color: #28921f;
+
+}
+.error{
+box-shadow: 0 0 5px #d45252;
+border-color: #b03535
+border: 1px solid red;
+
+}
+.ok1{
+
+box-shadow: 0 0 5px #5cd053;
+border-color: #28921f;
+
+}
+.error1{
+box-shadow: 0 0 5px #d45252;
+border-color: #b03535
+border: 1px solid red;
+
+}
+
+.main h1 {
+margin: 1em 0 0.5em 0;
+font-weight: 400;
+font-family: 'Titillium Web', sans-serif;
+position: center;
+font-size: 36px;
+line-height: 40px;
+padding: 15px 15px 15px 2%;
+color: #355681;
+box-shadow:
+inset 0 0 0 1px rgba(53,86,129, 0.4),
+
+inset 0 0 5px rgba(53,86,129, 0.5),
+
+inset -285px 0 35px white;
+border-radius: 0 10px 0 10px;
+
+}
+</style>
+{% endblock %}

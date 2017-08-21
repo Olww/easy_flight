@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<p><a href="/admin/tickets/tickets/add/">Добавить билет</a></p>
+<p><a href="/admin/tickets/tickets/">Удалить билеты</a></p>
+<p><a href="/admin/tickets/tickets/">Посмотреть все билеты</a></p>
+<p><a href="/admin/tickets/tickets/">Отметить оплату</a></p>
+
+{% if tickets %}
+<p>
+Заказанные вами билеты:	<br /><br />
+{%for ticket in tickets%}
+{{ticket.tickets_from}} - {{ticket.tickets_to}} {{ticket.tickets_datetime}}
+class:{{ticket.tickets_class}}  place:{{ticket.tickets_places}} price:{{ticket.tickets_price}}$ <a href="/lcb/user/delete/{{ticket.id}}/">отмена</a>
+<br/>
+<br/>
+{%endfor%}
+</p>
+{% else %}
+<p> К сожалению, вами не было заказано ни одного билета, актуального на сегодня! :( </p>
+{% endif %}
+
+<a href="{% url "users:auth_logout" %}">Выйти ({{ username }})</a>
+{% endblock %}

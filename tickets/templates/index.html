@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% if username %}
+    <a href="/auth/logout/"> logout {{username}} </a>
+    {% else %}
+    <a href="/auth/login/"> login </a>
+    {% endif %}
+    <b>{% for ticket in tickets %}
+      {{ticket.tickets_to}} {{ticket.tickets_from}} {{ticket.tickets_class}} {{ticket.tickets_date}} {{ticket.tickets_places}} <a href="/get/{{ticket.id}}/">Заказать</a><br>
+    {% endfor %}</b>
+  </body>
+</html>
